@@ -179,3 +179,12 @@ html:not([data-motion="on"]) *, html:not([data-motion="on"]) *::before, html:not
 .stage-chip{z-index:10;pointer-events:none;}
 .source-bridge,.stage-orbit{pointer-events:none;}
 .demo-disclaimer{z-index:11;}
+
+/* Direct read-only input sources, separate from generated Notebook sets. */
+.source-direct-links{margin:30px 0;padding:26px;border:1px solid #bcb0dc;border-radius:24px;background:#fffefbf2;}
+.source-direct-links h3{font-size:24px;margin:0 0 12px;}
+.source-direct-links p{color:var(--muted);font-size:14px;}
+.source-direct-actions{display:flex;flex-wrap:wrap;gap:12px;margin:20px 0;}
+.source-direct-note{font-size:12px!important;margin-bottom:0;}
+#source-files{scroll-margin-top:100px;}
+@media(max-width:600px){.source-direct-links{padding:20px;}.source-direct-actions .button{width:100%;}}
