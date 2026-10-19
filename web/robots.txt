@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://techkwon.github.io/gemini-notebook-flashcard-lab/sitemap.xml

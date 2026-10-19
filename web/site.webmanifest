@@ -1,0 +1,32 @@
+{
+  "name": "Notebook Lab · Gemini Notebook 플래시카드 연구",
+  "short_name": "Notebook Lab",
+  "description": "3회·9세트·92장의 실제 카드로 살펴본 독립 기능 테스트",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7f8fc",
+  "theme_color": "#6550b4",
+  "lang": "ko",
+  "icons": [
+    {
+      "src": "assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
