@@ -1,4 +1,7 @@
 /* Integration polish: real 3D faces, progressive enhancement and data details. */
+/* Composite each card independently: sibling planes must never intersect.
+   The inner rotator retains its own 3D context for front/back flipping. */
+.hero-stage { transform-style: flat; perspective: none; }
 body { position: relative; isolation: isolate; }
 html { scrollbar-gutter: stable; }
 html:has(#evidence-dialog[open]) { overflow-y: hidden; }
@@ -27,6 +30,7 @@ button:disabled { cursor: not-allowed; opacity: .65; }
   --face-pad: 14px; --photo-height: 250px; --card-height: 383px;
   padding: 0; border: 0; background: transparent; box-shadow: none;
   overflow: visible; perspective: 1100px;
+  transform-style: flat; isolation: isolate;
 }
 .floating-card::before, .floating-card::after { display: none; }
 .card-flip-inner {
@@ -113,7 +117,8 @@ html[data-motion-paused="true"] *, html[data-motion-paused="true"] *::before, ht
   .result-card, .evidence-card, .notebook-card, article { break-inside: avoid; box-shadow: none; }
 }
 
-.floating-card:hover, .floating-card:focus-visible { z-index: 7; }
+.floating-card:focus-visible { z-index: 7; }
+.floating-card:hover { z-index: 8; }
 @media (max-width:600px) {
  .hero { gap:0; padding-top:32px; }
  .hero-copy { display:contents; }
@@ -169,3 +174,8 @@ html:not([data-motion="on"]) *, html:not([data-motion="on"]) *::before, html:not
 @media(max-width:680px){.site-header nav a{display:none;}.site-header nav a[href="#recommendation"],.site-header nav a[href="#notebooks"]{display:inline-flex;}.recommend-prompt-head{display:block;}.recommend-workflow,.recommend-check,.recommended-prompt{padding:22px;}.recommendation h2{font-size:36px;}}
 @media(max-width:420px){.site-header nav a[href="#notebooks"]{display:none;}.recommend-lead{font-size:25px;}}
 @media print{.recommend-grid{grid-template-columns:1fr;}.recommendation{padding-top:20px;}.recommend-quick-actions,.recommended-prompt .copy-prompt{display:none;}.recommended-prompt .prompt-text{max-height:none;}}
+
+/* Decorations do not steal hover; labels stay above the selected card. */
+.stage-chip{z-index:10;pointer-events:none;}
+.source-bridge,.stage-orbit{pointer-events:none;}
+.demo-disclaimer{z-index:11;}

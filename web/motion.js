@@ -196,7 +196,8 @@ export function initMotion(data) {
   on(window, 'pointermove', e => {
     const p = S.ptr; p.x = e.clientX; p.y = e.clientY; p.nx = p.x / innerWidth; p.ny = p.y / innerHeight;
     p.active = e.pointerType === 'mouse'; p.s = 1;
-    if (!S.enabled || coarse() || e.pointerType !== 'mouse') return;
+    if (!S.enabled || coarse() || e.pointerType !== 'mouse') { clearPointer(); return; }
+    if (orb) orb.style.opacity = '1';
     const t = e.target instanceof Element ? e.target : null;
     const text = t ? labelFor(t) : '';
     if (label) { label.textContent = text || label.textContent; label.classList.toggle('is-visible', !!text); }
@@ -213,10 +214,14 @@ export function initMotion(data) {
       tl.style.transform = `${base(tl)} perspective(900px) rotateX(${-y * amt}deg) rotateY(${x * amt}deg)`;
       tl.style.setProperty('--gx', `${(x + .5) * 100}%`); tl.style.setProperty('--gy', `${(y + .5) * 100}%`); }
   });
-  const clearPointer = () => { S.ptr.active = false; if (label) label.classList.remove('is-visible'); resetTilt(tiltEl); tiltEl = null; if (magnet) magnet.style.translate = ''; magnet = null; };
+  const clearPointer = () => { S.ptr.active = false; if (orb) orb.style.opacity = '0'; if (label) label.classList.remove('is-visible'); resetTilt(tiltEl); tiltEl = null; if (magnet) magnet.style.translate = ''; magnet = null; };
   on(document, 'pointerleave', clearPointer);
   on(window, 'blur', clearPointer);
+  on(window, 'pointercancel', clearPointer);
+  on(mqCoarse, 'change', clearPointer);
+  on(mqHover, 'change', clearPointer);
   on(window, 'pointerdown', e => {
+    if (e.pointerType !== 'mouse') clearPointer();
     ripples[ripIdx] = [e.clientX / innerWidth, 1 - e.clientY / innerHeight, (performance.now() - S.t0) / 1000, 1];
     rippleUniform.set(ripples[ripIdx], ripIdx * 4);
     ripIdx = (ripIdx + 1) % 4;
@@ -269,6 +274,7 @@ export function initMotion(data) {
 
   // ---------- round change data transitions ----------
   on(document, 'lab:roundchange', () => {
+    clearPointer();
     observeReveals();
     if (!S.enabled) return;
     document.querySelectorAll('#round-results [data-result-card]').forEach((c, i) => {
@@ -289,7 +295,7 @@ export function initMotion(data) {
     bar.style.transform = `scaleX(${max > 0 ? Math.min(1, scrollY / max) : 0})`;
   }
   let sTick = 0;
-  on(window, 'scroll', () => { if (!sTick) sTick = requestAnimationFrame(() => { sTick = 0; progress(); }); });
+  on(window, 'scroll', () => { clearPointer(); if (!sTick) sTick = requestAnimationFrame(() => { sTick = 0; progress(); }); });
 
   // ---------- main loop ----------
   function drawFrame(now, dt = 0) {

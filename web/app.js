@@ -1,4 +1,4 @@
-import { initMotion } from './motion.js';
+import { initMotion } from './motion.js?v=interaction2';
 const $ = (s,root=document)=>root.querySelector(s);
 const escape = (s)=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const typeNames={images:'이미지형',slides:'슬라이드형',document:'문서형'};
@@ -15,8 +15,10 @@ document.querySelectorAll('[data-hero-card]').forEach(b=>{
 let data;
 try { const response=await fetch('./data/research.json',{signal:typeof AbortSignal.timeout==='function'?AbortSignal.timeout(12000):undefined}); if(!response.ok)throw new Error('data'); data=await response.json(); } catch(e){$('#round-results').insertAdjacentHTML('afterbegin','<p class="data-error" role="alert">연구 집계를 불러오지 못했습니다. 새로고침하거나 아래 공유 노트북과 공개 JSON을 직접 열어 주세요.</p>');document.querySelectorAll('[data-round]').forEach(b=>b.disabled=true);window.__LAB_DATA__={status:'unavailable'};data=null;}
 if(data){
+let activeRound=0;
 function renderRound(round){
-const exp=data.experiments.find(x=>x.round===round);if(!exp)return;
+const exp=data.experiments.find(x=>x.round===round);if(!exp||activeRound===round)return;
+activeRound=round;
 const panel=$('#round-results');panel.setAttribute('aria-labelledby','round-tab-'+round);
 panel.innerHTML='<div class="result-grid">'+exp.results.map((r,i)=>{
  const notebook=data.notebooks.find(n=>n.id===r.type);
