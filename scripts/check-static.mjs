@@ -44,6 +44,11 @@ check((html.match(/class="card-flip-inner"/g)||[]).length===3,'Three real flip s
 check(html.includes('aria-label="실제 카드 증거 확대"'),'Dialog needs an accessible name');
 check(html.includes('id="photo-credits"><p>'),'Photo credits must work without JavaScript');
 check(html.includes('id="notebook-grid" class="notebook-grid"><article'),'Notebook links must work without JavaScript');
+check(html.includes('id="recommendation"'),'Missing actionable recommendation');
+const escapedPrompt3=data.prompts.find(p=>p.round===3).text.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+check(html.includes(escapedPrompt3),'Recommended prompt must preserve the tested round-3 original');
+const recommendedResult=data.experiments.find(e=>e.round===3).results.find(r=>r.type==='document');
+check(recommendedResult.frontPhotos===10&&recommendedResult.frontLeak===0&&recommendedResult.altLeak===0&&recommendedResult.nameIssues===0,'Recommendation evidence mismatch');
 const files=[];function walk(dir){for(const name of fs.readdirSync(dir)){const file=path.join(dir,name);if(fs.statSync(file).isDirectory())walk(file);else files.push(file);}}walk(web);
 for(const file of files.filter(x=>/\.(html|css|js|json|xml|txt|webmanifest)$/i.test(x))){const source=fs.readFileSync(file,'utf8');check(!/C:\\Users\\|127\.0\.0\.1|localhost|bq9248@gmail\.com|ghp_[A-Za-z0-9]+|sk-ant-[A-Za-z0-9]+/.test(source),'Private/dev data in '+path.relative(web,file));}
 const size=files.reduce((sum,file)=>sum+fs.statSync(file).size,0);

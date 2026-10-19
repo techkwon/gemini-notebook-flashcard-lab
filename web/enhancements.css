@@ -136,3 +136,36 @@ html:not([data-motion="on"]) *, html:not([data-motion="on"]) *::before, html:not
 @media(max-width:600px){.chip-two{display:none;}}
 
 #ambient-canvas{opacity:.5;}
+
+/* Evidence-led recommendation and exact tested prompt. */
+.recommendation{padding-top:72px;}
+.recommend-lead{font-size:clamp(24px,3.3vw,40px);line-height:1.45;letter-spacing:-.04em;margin:0 0 22px;}
+.recommend-lead strong{color:var(--purple);}
+.recommend-quick-actions{display:flex;align-items:center;flex-wrap:wrap;gap:8px 20px;margin:20px 0 32px;}
+.recommend-quick-actions .copy-prompt{margin:0;background:var(--purple);color:white;border-color:var(--purple);}
+.recommend-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;}
+.recommend-choice{min-width:0;background:#fffefbed;border:1px solid #fff;border-radius:26px;padding:26px;box-shadow:var(--shadow);}
+.recommend-primary{border:2px solid #a99bd4;background:linear-gradient(145deg,#fffefb,#eee8fb);}
+.recommend-choice h3{font-size:24px;margin:16px 0 14px;}
+.recommend-choice p,.recommend-choice li{font-size:14px;color:var(--muted);}
+.recommend-choice ul{padding-left:20px;}
+.recommend-choice li{margin:8px 0;}
+.remaining-issue{padding:14px;border-radius:14px;background:var(--peach-soft);color:#78442d!important;}
+.recommend-workflow,.recommend-check,.recommended-prompt{margin-top:28px;padding:30px;border:1px solid var(--line);border-radius:24px;background:#fffefbed;}
+.recommend-workflow h3,.recommend-check h3{font-size:23px;margin:0 0 18px;}
+.recommend-workflow ol,.recommend-check ul{padding-left:22px;margin:0;}
+.recommend-workflow li,.recommend-check li{margin:12px 0;color:var(--muted);font-size:15px;}
+.recommend-workflow strong,.recommend-check strong{color:var(--ink);}
+.recommend-check p{margin:22px 0 0;color:var(--muted);font-size:14px;}
+.recommend-prompt-head{display:flex;align-items:center;justify-content:space-between;gap:24px;}
+.recommend-prompt-head h3{font-size:27px;margin:14px 0 0;}
+.prompt-origin{font-size:13px;color:var(--muted);}
+.recommended-prompt .prompt-text{font-family:inherit;word-break:keep-all;overflow-wrap:anywhere;max-height:360px;margin:20px 0;}
+.recommended-prompt summary{min-height:44px;cursor:pointer;font-weight:650;}
+.alternative-prompt .text-link{display:flex;}
+.recommend-scope{padding:16px 20px;border-left:3px solid var(--sage);background:#ffffff80;}
+#document-prompt,#image-prompt{scroll-margin-top:100px;}
+@media(max-width:1000px){.recommend-grid{grid-template-columns:1fr;}.recommend-choice{padding:24px;}}
+@media(max-width:680px){.site-header nav a{display:none;}.site-header nav a[href="#recommendation"],.site-header nav a[href="#notebooks"]{display:inline-flex;}.recommend-prompt-head{display:block;}.recommend-workflow,.recommend-check,.recommended-prompt{padding:22px;}.recommendation h2{font-size:36px;}}
+@media(max-width:420px){.site-header nav a[href="#notebooks"]{display:none;}.recommend-lead{font-size:25px;}}
+@media print{.recommend-grid{grid-template-columns:1fr;}.recommendation{padding-top:20px;}.recommend-quick-actions,.recommended-prompt .copy-prompt{display:none;}.recommended-prompt .prompt-text{max-height:none;}}
